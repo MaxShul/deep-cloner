@@ -8,7 +8,7 @@ public class Main {
         Man man = new Man("Bob", 30, List.of("The Bible", "For whom the bell tolls", "Catcher in the rye"));
         Man manClone = deepCloner.deepClone(man);
 
-        System.out.println(manClone);
+        System.out.println("The clone of a man: " + manClone);
 
     }
 }
