@@ -37,4 +37,12 @@ class Man {
         this.favoriteBooks = favoriteBooks;
     }
 
+    @Override
+    public String toString() {
+        return "Man{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", favoriteBooks=" + favoriteBooks +
+                '}';
+    }
 }
