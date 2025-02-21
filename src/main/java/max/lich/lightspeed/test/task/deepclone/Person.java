@@ -2,15 +2,15 @@ package max.lich.lightspeed.test.task.deepclone;
 
 import java.util.List;
 
-class Man {
+class Person {
     private String name;
     private int age;
     private List<String> favoriteBooks;
 
-    public Man() {
+    public Person() {
     }
 
-    public Man(String name, int age, List<String> favoriteBooks) {
+    public Person(String name, int age, List<String> favoriteBooks) {
         this.name = name;
         this.age = age;
         this.favoriteBooks = favoriteBooks;
