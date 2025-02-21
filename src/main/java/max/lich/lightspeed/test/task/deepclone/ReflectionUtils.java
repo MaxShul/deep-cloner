@@ -2,8 +2,22 @@ package max.lich.lightspeed.test.task.deepclone;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Set;
 
-public class ReflectionUtils {
+public final class ReflectionUtils {
+    private static final Set<Class<?>> BASIC_IMMUTABLE_CLASSES = Set.of(String.class, Boolean.class, Character.class,
+            Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Enum.class,
+            LocalDate.class, LocalTime.class, LocalDateTime.class, Instant.class, BigInteger.class, BigDecimal.class);
+
+    private ReflectionUtils() {
+    }
+
     public static Constructor<?> getDefaultConstructor(Class<?> aClass) {
         try {
             return aClass.getDeclaredConstructor();
@@ -38,5 +52,10 @@ public class ReflectionUtils {
             System.err.println(e);
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean notBasicImmutableType(Object object) {
+        Class<?> objectClass = object.getClass();
+        return !BASIC_IMMUTABLE_CLASSES.contains(objectClass);
     }
 }
