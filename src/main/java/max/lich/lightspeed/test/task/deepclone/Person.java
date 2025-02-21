@@ -5,6 +5,7 @@ import java.util.List;
 class Person {
     private String name;
     private int age;
+    private String[] favouriteMovies;
     private List<String> favoriteBooks;
 
     public Person() {
@@ -38,6 +39,14 @@ class Person {
 
     public void setFavoriteBooks(List<String> favoriteBooks) {
         this.favoriteBooks = favoriteBooks;
+    }
+
+    public String[] getFavouriteMovies() {
+        return favouriteMovies;
+    }
+
+    public void setFavouriteMovies(String[] favouriteMovies) {
+        this.favouriteMovies = favouriteMovies;
     }
 
     @Override
