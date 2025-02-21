@@ -54,8 +54,7 @@ public final class ReflectionUtils {
         }
     }
 
-    public static boolean notBasicImmutableType(Object object) {
-        Class<?> objectClass = object.getClass();
-        return !BASIC_IMMUTABLE_CLASSES.contains(objectClass);
+    public static boolean isBasicImmutableType(Class<?> objectClass) {
+        return objectClass.isPrimitive() || BASIC_IMMUTABLE_CLASSES.contains(objectClass);
     }
 }
