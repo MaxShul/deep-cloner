@@ -11,11 +11,31 @@ import java.time.LocalTime;
 import java.util.Set;
 
 public final class ReflectionUtils {
+
     private static final Set<Class<?>> BASIC_IMMUTABLE_CLASSES = Set.of(String.class, Boolean.class, Character.class,
             Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Enum.class,
             LocalDate.class, LocalTime.class, LocalDateTime.class, Instant.class, BigInteger.class, BigDecimal.class);
 
     private ReflectionUtils() {
+    }
+
+
+    public static <T> void setFieldValue(Field field, T newInstance, Object o) {
+        try {
+            field.set(newInstance, o);
+        } catch (IllegalAccessException e) {
+            System.err.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> Object getFieldValue(T t, Field field) {
+        try {
+            return field.get(t);
+        } catch (IllegalAccessException e) {
+            System.err.println(e);
+            throw new RuntimeException(e);
+        }
     }
 
     public static Constructor<?> getDefaultConstructor(Class<?> aClass) {
@@ -27,31 +47,17 @@ public final class ReflectionUtils {
         }
     }
 
-    static <T> void setFieldValue(Field field, T newInstance, Object o) {
-        try {
-            field.set(newInstance, o);
-        } catch (IllegalAccessException e) {
-            System.err.println(e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    static  <T> Object getFieldValue(T t, Field field) {
-        try {
-            return field.get(t);
-        } catch (IllegalAccessException e) {
-            System.err.println(e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    static  <T> T createNewInstance(Constructor<?> defaultConstructor) {
+    public static <T> T createNewInstance(Constructor<?> defaultConstructor) {
         try {
             return (T) defaultConstructor.newInstance();
         } catch (Exception e) {
             System.err.println(e);
             throw new RuntimeException(e);
         }
+    }
+    public static <T> T createNewInstance(Class<?> aClass) {
+        Constructor<?> defaultConstructor = ReflectionUtils.getDefaultConstructor(aClass);
+        return ReflectionUtils.createNewInstance(defaultConstructor);
     }
 
     public static boolean isBasicImmutableType(Class<?> objectClass) {

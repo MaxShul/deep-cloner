@@ -1,7 +1,6 @@
 package max.lich.lightspeed.test.task.deepclone;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Map;
@@ -9,8 +8,7 @@ import java.util.Map;
 public class DeepCloner {
     public <T> T deepClone(T objectToClone) {
         Class<?> aClass = objectToClone.getClass();
-        Constructor<?> defaultConstructor = ReflectionUtils.getDefaultConstructor(aClass);
-        T newInstance = ReflectionUtils.createNewInstance(defaultConstructor);
+        T newInstance = ReflectionUtils.createNewInstance(aClass);
 
         Field[] fields = aClass.getDeclaredFields();
         for (Field field : fields) {
