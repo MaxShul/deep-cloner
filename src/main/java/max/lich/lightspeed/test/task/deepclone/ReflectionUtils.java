@@ -55,7 +55,7 @@ public final class ReflectionUtils {
             throw new RuntimeException(e);
         }
     }
-    public static <T> T createNewInstance(Class<?> aClass) {
+    public static <T> T createNewInstance(Class<T> aClass) {
         Constructor<?> defaultConstructor = ReflectionUtils.getDefaultConstructor(aClass);
         return ReflectionUtils.createNewInstance(defaultConstructor);
     }

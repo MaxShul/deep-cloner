@@ -2,12 +2,13 @@ package max.lich.lightspeed.test.task.deepclone;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class DeepCloner {
     public <T> T deepClone(T objectToClone) {
-        Class<?> aClass = objectToClone.getClass();
+        Class<T> aClass = (Class<T>) objectToClone.getClass();
         T newInstance = ReflectionUtils.createNewInstance(aClass);
 
         Field[] fields = aClass.getDeclaredFields();
@@ -33,19 +34,18 @@ public class DeepCloner {
         if (!ReflectionUtils.isBasicImmutableType(fieldValueClass)) {
             if (fieldValueClass.isArray()) {
                 fieldValue = deepCloneArray(fieldValue);
-            } else if (fieldValue instanceof Collection<?>) {
+            } else if (fieldValue instanceof Collection<?> valueCollection) {
                 //todo
-                fieldValue = deepCloneCollection(fieldValue);
-            } else if (fieldValue instanceof Map<?, ?>) {
+                fieldValue = deepCloneCollection(valueCollection);
+            } else if (fieldValue instanceof Map<?, ?> valueMap) {
                 //todo
-                fieldValue = deepCloneMap(fieldValue);
+                fieldValue = deepCloneMap(valueMap);
             } else {
                 fieldValue = deepClone(fieldValue);
             }
         }
         return fieldValue;
     }
-
 
 
     private Object deepCloneArray(Object array) {
@@ -67,12 +67,58 @@ public class DeepCloner {
         return copiedArray;
     }
 
-    private Object deepCloneCollection(Object fieldValue) {
+    private Collection<?> deepCloneCollection(Collection<?> oldCollection) {
+        Collection<Object> newCollection = createNewCollection(oldCollection);
+        oldCollection.stream()
+                .map(this::deepCloneValueIfNeed)
+                .forEach(newCollection::add);
 
-        return null;
+        return newCollection;
     }
 
-    private Object deepCloneMap(Object fieldValue) {
-        return null;
+    private Collection<Object> createNewCollection(Collection<?> collection) {
+        if (collection instanceof List<?>) {
+            return new ArrayList<>();
+        }
+        if (collection instanceof SortedSet<?>) {
+            return new TreeSet<>();
+        }
+        if (collection instanceof LinkedHashSet<?>) {
+            return new LinkedHashSet<>();
+        }
+        if (collection instanceof Set<?>) {
+            return new HashSet<>();
+        }
+        if (collection instanceof Deque<?>) {
+            return new ArrayDeque<>();
+        }
+
+        return ReflectionUtils.createNewInstance(collection.getClass());
+    }
+
+    private Object deepCloneMap(Map<?, ?> oldMap) {
+        Map<Object, Object> newMap = createNewMap(oldMap);
+        oldMap.entrySet().stream()
+                .map(entry -> {
+                    Object key = deepCloneValueIfNeed(entry.getKey());
+                    Object value = deepCloneValueIfNeed(entry.getValue());
+                    return new AbstractMap.SimpleEntry<>(key, value);
+                })
+                .forEach(entry -> newMap.put(entry.getKey(), entry.getValue()));
+
+        return newMap;
+    }
+
+    private Map<Object, Object> createNewMap(Object oldMap) {
+        if (oldMap instanceof NavigableMap<?,?>) {
+            return new TreeMap<>();
+        }
+        if (oldMap instanceof LinkedHashMap<?,?>) {
+            return new LinkedHashMap<>();
+        }
+        if (oldMap instanceof ConcurrentMap<?,?>) {
+            return new ConcurrentHashMap<>();
+        }
+        return new HashMap<>();
     }
 }

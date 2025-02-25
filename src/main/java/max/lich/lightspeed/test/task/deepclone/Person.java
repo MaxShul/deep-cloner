@@ -1,5 +1,6 @@
 package max.lich.lightspeed.test.task.deepclone;
 
+import java.util.Arrays;
 import java.util.List;
 
 class Person {
@@ -49,11 +50,13 @@ class Person {
         this.favouriteMovies = favouriteMovies;
     }
 
+
     @Override
     public String toString() {
-        return "Man{" +
+        return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", favouriteMovies=" + Arrays.toString(favouriteMovies) +
                 ", favoriteBooks=" + favoriteBooks +
                 '}';
     }
