@@ -1,13 +1,16 @@
 package max.lich.lightspeed.test.task.deepclone;
 
 public class Book {
-    private String title;
+    private String name;
     private String description;
     private int pages;
     private String author;
 
-    public Book(String title, String description, int pages, String author) {
-        this.title = title;
+    public Book() {
+    }
+
+    public Book(String name, String description, int pages, String author) {
+        this.name = name;
         this.description = description;
         this.pages = pages;
         this.author = author;
@@ -37,11 +40,21 @@ public class Book {
         this.description = description;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", pages=" + pages +
+                ", author='" + author + '\'' +
+                '}';
     }
 }

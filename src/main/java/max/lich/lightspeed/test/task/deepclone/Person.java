@@ -12,6 +12,13 @@ class Person {
     public Person() {
     }
 
+    public Person(String name, int age, String[] favouriteMovies, List<Book> favoriteBooks) {
+        this.name = name;
+        this.age = age;
+        this.favouriteMovies = favouriteMovies;
+        this.favoriteBooks = favoriteBooks;
+    }
+
     public Person(String name, int age, List<Book> favoriteBooks) {
         this.name = name;
         this.age = age;
