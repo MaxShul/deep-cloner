@@ -35,10 +35,8 @@ public class DeepCloner {
             if (fieldValueClass.isArray()) {
                 fieldValue = deepCloneArray(fieldValue);
             } else if (fieldValue instanceof Collection<?> valueCollection) {
-                //todo
                 fieldValue = deepCloneCollection(valueCollection);
             } else if (fieldValue instanceof Map<?, ?> valueMap) {
-                //todo
                 fieldValue = deepCloneMap(valueMap);
             } else {
                 fieldValue = deepClone(fieldValue);
