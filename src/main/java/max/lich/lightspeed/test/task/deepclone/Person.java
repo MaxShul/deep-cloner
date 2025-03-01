@@ -7,12 +7,12 @@ class Person {
     private String name;
     private int age;
     private String[] favouriteMovies;
-    private List<String> favoriteBooks;
+    private List<Book> favoriteBooks;
 
     public Person() {
     }
 
-    public Person(String name, int age, List<String> favoriteBooks) {
+    public Person(String name, int age, List<Book> favoriteBooks) {
         this.name = name;
         this.age = age;
         this.favoriteBooks = favoriteBooks;
@@ -34,11 +34,11 @@ class Person {
         this.age = age;
     }
 
-    public List<String> getFavoriteBooks() {
+    public List<Book> getFavoriteBooks() {
         return favoriteBooks;
     }
 
-    public void setFavoriteBooks(List<String> favoriteBooks) {
+    public void setFavoriteBooks(List<Book> favoriteBooks) {
         this.favoriteBooks = favoriteBooks;
     }
 
